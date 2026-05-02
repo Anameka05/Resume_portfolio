@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>B. Anameka </title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --bg:#0f172a; --bg2:#1e293b; --bg3:#162032;
+  --accent:#38bdf8; --accent2:#0ea5e9; --accent3:#7dd3fc;
+  --text:#e2e8f0; --text2:#94a3b8; --text3:#64748b;
+  --border:rgba(56,189,248,0.12); --glass:rgba(30,41,59,0.75);
+  --card:rgba(22,32,50,0.8); --glow:rgba(56,189,248,0.15);
+  --glow2:rgba(56,189,248,0.25); --radius:12px; --radius-lg:16px;
+  --shadow:0 4px 32px rgba(0,0,0,0.4);
+}
+[data-theme="light"] {
+  --bg:#f0f6ff; --bg2:#ffffff; --bg3:#e8f2fc;
+  --accent:#0284c7; --accent2:#0369a1; --accent3:#0ea5e9;
+  --text:#0f172a; --text2:#334155; --text3:#64748b;
+  --border:rgba(2,132,199,0.15); --glass:rgba(255,255,255,0.82);
+  --card:rgba(248,252,255,0.9); --glow:rgba(2,132,199,0.10);
+  --glow2:rgba(2,132,199,0.18); --shadow:0 4px 32px rgba(14,58,120,0.10);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;transition:background .3s,color .3s;overflow-x:hidden;}
+.bg-mesh{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;}
+.bg-mesh::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(56,189,248,0.08)0%,transparent 70%);top:-100px;left:-100px;animation:drift1 18s ease-in-out infinite alternate;}
+.bg-mesh::after{content:'';position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(14,165,233,0.07)0%,transparent 70%);bottom:-80px;right:-80px;animation:drift2 22s ease-in-out infinite alternate;}
+@keyframes drift1{from{transform:translate(0,0) scale(1);}to{transform:translate(80px,60px) scale(1.2);}}
+@keyframes drift2{from{transform:translate(0,0) scale(1);}to{transform:translate(-60px,-40px) scale(1.15);}}
+.container{max-width:1120px;margin:0 auto;padding:0 2rem;position:relative;z-index:1;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px);background:var(--glass);border-bottom:1px solid var(--border);transition:all .3s;}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;max-width:1120px;margin:0 auto;}
+.nav-logo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.3rem;color:var(--accent);letter-spacing:-.02em;text-decoration:none;}
+.nav-logo span{color:var(--text);}
+.nav-links{display:flex;gap:1.75rem;list-style:none;align-items:center;}
+.nav-links a{color:var(--text2);font-size:.875rem;font-weight:500;text-decoration:none;letter-spacing:.02em;transition:color .2s;position:relative;padding-bottom:2px;}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1.5px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.nav-links a:hover{color:var(--accent);}
+.nav-links a:hover::after{transform:scaleX(1);}
+.theme-btn{width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:var(--bg2);color:var(--accent);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;}
+.theme-btn:hover{background:var(--glow);border-color:var(--accent);}
+#hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:7rem 2rem 4rem;text-align:center;position:relative;z-index:1;}
+.hero-inner{max-width:760px;margin:0 auto;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:var(--glow);border:1px solid var(--border);color:var(--accent3);font-size:.78rem;font-weight:500;padding:6px 14px;border-radius:99px;margin-bottom:2rem;letter-spacing:.06em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;animation:fadeDown .6s ease both;}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);display:inline-block;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.4;transform:scale(.8);}}
+.avatar-wrap{width:130px;height:130px;border-radius:50%;margin:0 auto 2rem;border:3px solid var(--accent);box-shadow:0 0 0 8px var(--glow),var(--shadow);overflow:hidden;animation:fadeUp .7s .1s ease both;display:flex;align-items:center;justify-content:center;background:var(--bg2);}
+.avatar-wrap img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.avatar-initials{font-family:'Syne',sans-serif;font-size:2.4rem;font-weight:800;color:var(--accent);display:flex;width:100%;height:100%;align-items:center;justify-content:center;}
+.hero-name{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,6vw,4.5rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;color:var(--text);animation:fadeUp .7s .2s ease both;margin-bottom:.75rem;}
+.hero-name .accent-dot{color:var(--accent);}
+.typing-wrap{font-family:'JetBrains Mono',monospace;font-size:clamp(.9rem,2vw,1.1rem);color:var(--accent);min-height:1.8em;margin-bottom:1.5rem;animation:fadeUp .7s .3s ease both;}
+.typing-cursor{display:inline-block;width:2px;height:1em;background:var(--accent);vertical-align:middle;margin-left:2px;animation:blink .9s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+.hero-desc{font-size:1rem;color:var(--text2);line-height:1.75;max-width:520px;margin:0 auto 2.5rem;animation:fadeUp .7s .4s ease both;}
+.hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeUp .7s .5s ease both;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:.75rem 1.75rem;border-radius:var(--radius);font-size:.9rem;font-weight:600;text-decoration:none;cursor:pointer;border:none;transition:all .25s;font-family:'Space Grotesk',sans-serif;letter-spacing:.01em;}
+.btn-primary{background:var(--accent);color:#0f172a;box-shadow:0 0 24px var(--glow2);}
+.btn-primary:hover{background:var(--accent3);box-shadow:0 0 36px var(--glow2);transform:translateY(-2px);}
+.btn-outline{background:transparent;color:var(--accent);border:1.5px solid var(--accent);}
+.btn-outline:hove
+r{background:var(--glow);transform:translateY(-2px);box-shadow:0 0 24px var(--glow);}
+section{padding:6rem 0;position:relative;z-index:1;}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:.75rem;font-weight:500;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:.75rem;display:flex;align-items:center;gap:8px;}
+.section-label::before{content:'';width:24px;height:1.5px;background:var(--accent);}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:800;letter-spacing:-.03em;color:var(--text);margin-bottom:1rem;line-height:1.1;}
+.section-sub{color:var(--text2);font-size:1rem;max-width:520px;line-height:1.75;}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
+.about-text p{color:var(--text2);margin-bottom:1rem;font-size:.975rem;line-height:1.8;}
+.about-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-top:2rem;}
+.stat-card{background:var(--glass);border:1px solid var(--border);border-radius:var(--radius);padding:1.25rem;text-align:center;backdrop-filter:blur(8px);}
+.stat-num{font-family:'Syne',sans-serif;font-size:2rem;font-weight:800;color:var(--accent);line-height:1;display:block;}
+.stat-label{font-size:.78rem;color:var(--text2);font-weight:500;margin-top:4px;display:block;}
+.about-visual{position:relative;display:flex;align-items:center;justify-content:center;}
+.about-visual-inner{width:320px;height:320px;border-radius:24px;background:var(--card);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;backdrop-filter:blur(16px);}
+.about-grid-dots{position:absolute;inset:0;background-image:radial-gradient(var(--border) 1px,transparent 1px);background-size:24px 24px;}
+.about-ai-icon{font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent3);opacity:.6;position:absolute;animation:floatCode 8s linear infinite;white-space:nowrap;}
+@keyframes floatCode{0%{opacity:0;transform:translateY(0);}10%{opacity:.7;}90%{opacity:.7;}100%{opacity:0;transform:translateY(-100px);}}
+.about-center-badge{background:var(--glow);border:1px solid var(--border);border-radius:12px;padding:1.5rem 2rem;text-align:center;position:relative;z-index:2;}
+.about-center-badge .icon{font-size:2.5rem;margin-bottom:.5rem;}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.25rem;margin-top:3rem;}
+.skill-group{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;backdrop-filter:blur(8px);transition:all .3s;}
+.skill-group:hover{border-color:rgba(56,189,248,.28);box-shadow:0 8px 32px var(--glow);}
+.skill-group-title{font-size:.72rem;font-weight:600;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;font-family:'JetBrains Mono',monospace;margin-bottom:1rem;}
+.skill-pills{display:flex;flex-wrap:wrap;gap:.5rem;}
+.pill{background:var(--glow);border:1px solid var(--border);color:var(--text);font-size:.78rem;font-weight:500;padding:4px 12px;border-radius:99px;transition:all .2s;}
+.pill:hover{background:var(--glow2);border-color:var(--accent);color:var(--accent);}
+.timeline{position:relative;margin-top:3rem;}
+.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:1.5px;background:linear-gradient(to bottom,var(--accent),transparent);}
+.timeline-item{position:relative;padding-left:64px;margin-bottom:2.5rem;}
+.timeline-dot{position:absolute;left:12px;top:20px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2.5px solid var(--accent);box-shadow:0 0 12px var(--glow2);}
+.timeline-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem 1.75rem;backdrop-filter:blur(8px);transition:all .3s;}
+.timeline-card:hover{border-color:rgba(56,189,248,.28);transform:translateX(4px);box-shadow:0 6px 30px var(--glow);}
+.timeline-meta{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;margin-bottom:.5rem;}
+.timeline-role{font-weight:700;color:var(--text);font-size:1rem;}
+.timeline-company{color:var(--accent);font-size:.875rem;font-weight:500;}
+.timeline-year{margin-left:auto;background:var(--glow);border:1px solid var(--border);color:var(--accent3);font-size:.72rem;font-family:'JetBrains Mono',monospace;padding:3px 10px;border-radius:99px;}
+.timeline-points{list-style:none;margin-top:.75rem;}
+.timeline-points li{color:var(--text2);font-size:.9rem;padding:4px 0;display:flex;align-items:flex-start;gap:8px;}
+.timeline-points li::before{content:'→';color:var(--accent);flex-shrink:0;font-family:'JetBrains Mono',monospace;}
+.map-btn{display:inline-flex;align-items:center;gap:6px;margin-top:.85rem;font-size:.78rem;font-family:'JetBrains Mono',monospace;color:var(--accent3);background:var(--glow);border:1px solid var(--border);padding:5px 14px;border-radius:99px;text-decoration:none;transition:all .2s;}
+.map-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--glow2);}
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem;margin-top:3rem;}
+.project-card{display:block;text-decoration:none;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.75rem;backdrop-filter:blur(8px);transition:all .35s cubic-bezier(.4,0,.2,1);position:relative;overflow:hidden;cursor:pointer;}
+.project-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+.project-card:hover{border-color:rgba(56,189,248,.3);box-shadow:0 16px 48px var(--glow);transform:translateY(-6px);}
+.project-card:hover::before{transform:scaleX(1);}
+.project-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem;}
+.project-icon{width:44px;height:44px;border-radius:10px;background:var(--glow);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.3rem;}
+.github-badge{font-size:.7rem;color:var(--text3);font-family:'JetBrains Mono',monospace;background:var(--bg2);border:1px solid var(--border);padding:4px 10px;border-radius:6px;display:flex;align-items:center;gap:4px;transition:all .2s;}
+.project-card:hover .github-badge{color:var(--accent);border-color:var(--accent);}
+.project-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;color:var(--text);margin-bottom:.5rem;line-height:1.3;}
+.project-desc{color:var(--text2);font-size:.875rem;line-height:1.7;margin-bottom:1.25rem;}
+.project-tags{display:flex;flex-wrap:wrap;gap:.4rem;}
+.tag{font-family:'JetBrains Mono',monospace;font-size:.7rem;font-weight:500;color:var(--accent2);background:rgba(56,189,248,.08);border:1px solid rgba(56,189,248,.15);padding:3px 9px;border-radius:6px;transition:all .2s;}
+.project-card:hover .tag{background:rgba(56,189,248,.15);border-color:rgba(56,189,248,.3);}
+.research-list{margin-top:3rem;display:flex;flex-direction:column;gap:1rem;}
+.research-item{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem 1.75rem;display:flex;gap:1.25rem;align-items:flex-start;backdrop-filter:blur(8px);transition:all .3s;}
+.research-item:hover{border-color:rgba(56,189,248,.28);transform:translateX(6px);box-shadow:0 4px 24px var(--glow);}
+.research-num{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--accent3);flex-shrink:0;width:28px;height:28px;border-radius:6px;background:var(--glow);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;margin-top:2px;}
+.research-title{font-weight:700;color:var(--text);font-size:.95rem;margin-bottom:.35rem;}
+.research-venue{font-size:.8rem;color:var(--accent);font-style:italic;margin-bottom:.35rem;}
+.research-desc{font-size:.85rem;color:var(--text2);line-height:1.6;}
+.achieve-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.25rem;margin-top:3rem;}
+.achieve-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:1.5rem;display:flex;gap:1rem;align-items:flex-start;backdrop-filter:blur(8px);transition:all .3s;}
+.achieve-card:hover{border-color:rgba(56,189,248,.28);box-shadow:0 6px 28px var(--glow);transform:translateY(-3px);}
+.achieve-icon{font-size:1.4rem;width:44px;height:44px;flex-shrink:0;border-radius:10px;background:var(--glow);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;}
+.achieve-title{font-weight:700;color:var(--text);font-size:.9rem;margin-bottom:.3rem;}
+.achieve-desc{font-size:.82rem;color:var(--text2);line-height:1.6;}
+/* CERTIFICATIONS */
+.cert-grid-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-top:2rem;}
+.cert-card{display:flex;align-items:center;gap:.85rem;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:1rem 1.25rem;text-decoration:none;transition:all .25s;backdrop-filter:blur(8px);cursor:pointer;}
+.cert-card:hover{border-color:rgba(56,189,248,.35);background:rgba(56,189,248,.07);transform:translateY(-3px);box-shadow:0 6px 24px var(--glow);}
+.cert-card-icon{width:38px;height:38px;flex-shrink:0;border-radius:8px;background:var(--glow2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.05rem;}
+.cert-card-body{flex:1;min-width:0;}
+.cert-card-org{font-size:.62rem;font-family:'JetBrains Mono',monospace;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;}
+.cert-card-name{font-size:.84rem;font-weight:600;color:var(--text);line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.cert-card-arrow{color:var(--text3);font-size:1rem;transition:all .2s;flex-shrink:0;}
+.cert-card:hover .cert-card-arrow{color:var(--accent);transform:translateX(3px);}
+#contact{padding-bottom:4rem;}
+.contact-inner{max-width:680px;margin:3rem auto 0;background:var(--card);border:1px solid var(--border);border-radius:var(--radius-lg);padding:3rem;backdrop-filter:blur(16px);text-align:center;}
+.contact-links{display:flex;gap:1.25rem;justify-content:center;flex-wrap:wrap;margin-top:2rem;}
+.contact-link{display:inline-flex;align-items:center;gap:8px;background:var(--glow);border:1.5px solid var(--border);color:var(--text);font-size:.9rem;font-weight:500;padding:.7rem 1.5rem;border-radius:var(--radius);text-decoration:none;transition:all .25s;}
+.contact-link:hover{border-color:var(--accent);color:var(--accent);background:var(--glow2);transform:translateY(-2px);box-shadow:0 6px 24px var(--glow);}
+.contact-form{margin-top:2.5rem;display:flex;flex-direction:column;gap:1rem;text-align:left;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+.form-group{display:flex;flex-direction:column;gap:.4rem;}
+.form-group label{font-size:.8rem;font-weight:600;color:var(--text2);letter-spacing:.05em;}
+.form-group input,.form-group textarea{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:.7rem 1rem;color:var(--text);font-size:.875rem;font-family:inherit;outline:none;transition:all .2s;resize:vertical;}
+.form-group input:focus,.form-group textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--glow);}
+.form-group textarea{min-height:100px;}
+footer{text-align:center;padding:2rem;border-top:1px solid var(--border);color:var(--text3);font-size:.8rem;position:relative;z-index:1;font-family:'JetBrains Mono',monospace;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-16px);}to{opacity:1;transform:translateY(0);}}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .65s ease,transform .65s ease;}
+.reveal.visible{opacity:1;transform:none;}
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--bg);}
+::-webkit-scrollbar-thumb{background:var(--accent3);border-radius:99px;}
+@media(max-width:768px){
+  .about-grid{grid-template-columns:1fr;}
+  .about-visual{display:none;}
+  .nav-links{display:none;}
+  .form-row{grid-template-columns:1fr;}
+  .contact-inner{padding:2rem 1.5rem;}
+  .hero-actions{flex-direction:column;align-items:center;}
+  section{padding:4rem 0;}
+}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">Ana<span>meka</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">☀</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">Open to Internships &amp; Research Collaboration</div>
+
+    <!--
+    ╔══════════════════════════════════════════════╗
+    ║  YOUR PROFILE PHOTO — HOW TO ADD IT          ║
+    ║  1. Rename your photo to: profile.jpg        ║
+    ║  2. Put it in the same folder as this file   ║
+    ║  3. Replace "profile.jpg" in src= below      ║
+    ║     with your actual photo filename          ║
+    ║  If no photo is found, "BA" initials show.   ║
+    ╚══════════════════════════════════════════════╝
+    -->
+    <div class="avatar-wrap" id="avatar-container">
+      <img
+        src="C:\Users\acer\OneDrive\Desktop\RESUME_PORTFOLIO_ANAME\Profile.jpg.jpeg"
+        alt="B. Anameka profile photo"
+        id="profile-img"
+        onerror="document.getElementById('profile-img').style.display='none'; document.getElementById('avatar-initials').style.display='flex';"
+      />
+      <span class="avatar-initials" id="avatar-initials" style="display:none;">BA</span>
+    </div>
+
+    <h1 class="hero-name">B<span class="accent-dot">.</span> Anameka</h1>
+
+    <!--
+    ╔══════════════════════════════════════════════╗
+    ║  TYPING ANIMATION TEXT                       ║
+    ║  These are the phrases that cycle below      ║
+    ║  your name. They are set in the <script>     ║
+    ║  section at the bottom of this file.         ║
+    ║  Look for: const phrases = [...]             ║
+    ╚══════════════════════════════════════════════╝
+    -->
+    <div class="typing-wrap">
+      <span id="typing-text"></span><span class="typing-cursor"></span>
+    </div>
+
+    <p class="hero-desc">
+      B.Sc. Computer Science with Artificial I student at Jeppiaar College of Arts &amp; Science, Chennai.
+      Passionate about building intelligent systems that solve real problems — from sign language
+      accessibility to AI-driven fraud detection.
+    </p>
+
+    <div class="hero-actions">
+      <!--
+      ╔══════════════════════════════════════════════╗
+      ║  RESUME DOWNLOAD BUTTON                      ║
+      ║  1. Save your resume PDF as: resume.pdf      ║
+      ║  2. Put it in the same folder as this file   ║
+      ║  3. The button will automatically download   ║
+      ║     the file when clicked                    ║
+      ╚══════════════════════════════════════════════╝
+      -->
+      <a href="C:\Users\acer\OneDrive\Desktop\RESUME_PORTFOLIO_ANAME\Resume_ANAMEKA.pdf" download="B_Anameka_Resume.pdf" class="btn btn-primary">
+        ↓ Download Resume
+      </a>
+      <a href="#projects" class="btn btn-outline">View Projects →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <div class="section-label">About Me</div>
+        <h2 class="section-title">Curious builder, relentless learner</h2>
+        <p>I'm a final-year B.Sc. Computer Science with AI student at
+          <!--
+          College name is clickable — it opens the college website.
+          If the website URL is wrong, change the href below.
+          -->
+          <a href="https://jeppiaararts.in/" target="_blank" style="color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent);">
+            Jeppiaar College of Arts &amp; Science
+          </a>, Chennai, with an academic score of 82%.
+        </p>
+        <p>My focus lies in Artificial Intelligence, Machine Learning, and Data Analytics. I'm passionate about crafting scalable AI solutions — from sign language accessibility tools to AI-powered financial fraud detection systems.</p>
+        <p>Beyond tech, I serve as Department President for AI &amp; Data Science and am a Campus Ambassador at IIT Bombay, actively bridging academic knowledge with industry practice.</p>
+        <div class="about-stats">
+          <div class="stat-card"><span class="stat-num">9+</span><span class="stat-label">Projects Built</span></div>
+          <div class="stat-card"><span class="stat-num">4</span><span class="stat-label">Research Papers</span></div>
+          <div class="stat-card"><span class="stat-num">17+</span><span class="stat-label">Certifications</span></div>
+          <div class="stat-card"><span class="stat-num">82%</span><span class="stat-label">Academic Score</span></div>
+        </div>
+      </div>
+      <div class="about-visual reveal">
+        <div class="about-visual-inner">
+          <div class="about-grid-dots"></div>
+          <div class="about-ai-icon" style="top:15%;left:8%;">model.fit(X, y)</div>
+          <div class="about-ai-icon" style="top:55%;left:55%;animation-delay:-3s;">torch.nn.Linear</div>
+          <div class="about-ai-icon" style="top:75%;left:12%;animation-delay:-5s;">sklearn.predict()</div>
+          <div class="about-ai-icon" style="top:35%;left:40%;animation-delay:-1.5s;">import pandas as pd</div>
+          <div class="about-center-badge">
+            <div class="icon">🎓</div>
+            <!--
+            "Student" label — clicking opens the college website
+            -->
+            <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.1rem;margin-bottom:4px;">
+              <a href="https://jeppiaararts.in/" target="_blank" style="color:var(--accent);text-decoration:none;">
+                Student ↗
+              </a>
+            </div>
+            <p style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--accent3);">Jeppiaar College of Arts &amp; Science</p>
+            <p style="margin-top:6px;color:var(--text3);font-size:.75rem;">2023 – 2026</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Technical Skills</div>
+      <h2 class="section-title">My Toolkit</h2>
+      <p class="section-sub">Languages, frameworks, and tools I use to build intelligent systems.</p>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group reveal"><div class="skill-group-title">Languages</div><div class="skill-pills"><span class="pill">Python</span><span class="pill">C</span><span class="pill">C++</span><span class="pill">Java</span><span class="pill">R</span></div></div>
+      <div class="skill-group reveal"><div class="skill-group-title">AI / ML</div><div class="skill-pills"><span class="pill">TensorFlow</span><span class="pill">PyTorch</span><span class="pill">Watson Studio</span><span class="pill">Scikit-learn</span><span class="pill">Computer Vision</span><span class="pill">NLP</span></div></div>
+      <div class="skill-group reveal"><div class="skill-group-title">Data & Analytics</div><div class="skill-pills"><span class="pill">IBM Cognos</span><span class="pill">R Studio</span><span class="pill">Pandas</span><span class="pill">Data Visualization</span><span class="pill">Business Intelligence</span></div></div>
+      <div class="skill-group reveal"><div class="skill-group-title">Tools & Platforms</div><div class="skill-pills"><span class="pill">GitHub</span><span class="pill">VS Code</span><span class="pill">ServiceNow</span><span class="pill">MongoDB</span><span class="pill">IBM Skills Build</span><span class="pill">UI Path</span></div></div>
+      <div class="skill-group reveal"><div class="skill-group-title">Design & Web</div><div class="skill-pills"><span class="pill">Canva</span><span class="pill">UX/UI Design</span><span class="pill">Web Design</span><span class="pill">MS Office</span></div></div>
+      <div class="skill-group reveal"><div class="skill-group-title">Interests</div><div class="skill-pills"><span class="pill">Computer Vision</span><span class="pill">IoT</span><span class="pill">Chatbot Dev</span><span class="pill">Deep Learning</span><span class="pill">Fintech AI</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Experience</div>
+      <h2 class="section-title">Where I've worked</h2>
+    </div>
+    <div class="timeline">
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-meta">
+            <span class="timeline-role">IT Intern</span>
+            <span class="timeline-company">Simon and Sons</span>
+            <span class="timeline-year">2025</span>
+          </div>
+          <ul class="timeline-points">
+            <li>Gained hands-on experience in software setup, configuration, and troubleshooting across enterprise environments.</li>
+            <li>Assisted in website testing, QA documentation, and cross-functional technical support activities.</li>
+          </ul>
+          <!--
+          MAP LINK — clicking opens Google Maps.
+          HOW TO UPDATE:
+          1. Go to Google Maps
+          2. Search "Simon and Sons Chennai" (or exact address)
+          3. Click Share → Copy link
+          4. Replace the href below with that link
+          -->
+          <a href="https://www.google.com/maps/search/Simon+and+Sons+Chennai" target="_blank" class="map-btn">
+            📍 View on Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-meta">
+            <span class="timeline-role">Digital Marketing Intern</span>
+            <span class="timeline-company">Hawking Path</span>
+            <span class="timeline-year">2024</span>
+          </div>
+          <ul class="timeline-points">
+            <li>Managed multi-platform content creation and executed strategic social media campaigns to grow brand visibility.</li>
+            <li>Improved audience reach through data-informed promotional strategies and engagement analytics.</li>
+          </ul>
+          <!--
+          HOW TO UPDATE THIS MAP LINK:
+          1. Search "Hawking Path" on Google Maps
+          2. Click Share → Copy link → replace href below
+          -->
+          <a href="https://www.google.com/maps/search/Hawking+Path+Chennai" target="_blank" class="map-btn">
+            📍 View on Google Maps
+          </a>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card">
+          <div class="timeline-meta">
+            <span class="timeline-role">Department President — AI &amp; Data Science</span>
+            <span class="timeline-company">Jeppiaar College of Arts &amp; Science</span>
+            <span class="timeline-year">2023–2026</span>
+          </div>
+          <ul class="timeline-points">
+            <li>Led the department student body, organizing technical workshops, seminars, and collaborative AI projects.</li>
+            <li>Represented the department at intercollegiate events; Campus Ambassador at IIT Bombay.</li>
+          </ul>
+          <a href="https://www.google.com/maps/search/Jeppiaar+College+Arts+Science+Sholinganallur+Chennai" target="_blank" class="map-btn">
+            📍 View College on Map
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Projects</div>
+      <h2 class="section-title">Things I've built</h2>
+      <!--
+      ╔══════════════════════════════════════════════════╗
+      ║  PROJECT GITHUB LINKS — HOW TO ADD THEM          ║
+      ║  Each project card is a link to your GitHub.     ║
+      ║  1. Go to github.com and find your repo          ║
+      ║  2. Copy the URL from your browser               ║
+      ║     e.g. https://github.com/yourusername/sign-mate
+      ║  3. Find the project below                       ║
+      ║  4. Replace href="#" with your GitHub URL        ║
+      ║  5. If you don't have a repo yet, leave href="#" ║
+      ╚══════════════════════════════════════════════════╝
+      -->
+      <p class="section-sub">Click any card to view the project on GitHub.</p>
+    </div>
+    <div class="projects-grid">
+
+      <a href="#" target="_blank" class="project-card reveal"><!-- REPLACE # with your Sign Mate GitHub URL -->
+        <div class="project-card-top"><div class="project-icon">🤟</div><span class="github-badge">⌥ GitHub →</span></div>
+        <div class="project-title">Sign Mate</div>
+        <div class="project-desc">AI-powered chatbot that interprets and translates sign language into real-time text, improving communication accessibility for the hearing impaired.</div>
+        <div class="project-tags"><span class="tag">Python</span><span class="tag">Computer Vision</span><span class="tag">NLP</span><span class="tag">Deep Learning</span></div>
+      </a>
+
+      <a href="#" target="_blank" class="project-card reveal"><!-- REPLACE # with your Face Mask Detection GitHub URL -->
+        <div class="project-card-top"><div class="project-icon">🎭</div><span class="github-badge">⌥ GitHub →</span></div>
+        <div class="project-title">Live Face Mask Detection</div>
+        <div class="project-desc">Real-time computer vision system using deep learning and webcam/video feed to detect whether individuals are wearing face masks.</div>
+        <div class="project-tags"><span class="tag">OpenCV</span><span class="tag">TensorFlow</span><span class="tag">Deep Learning</span><span class="tag">Python</span></div>
+      </a>
+
+      <a href="#" target="_blank" class="project-card reveal"><!-- REPLACE # with your Bus Tech GitHub URL -->
+        <div class="project-card-top"><div class="project-icon">🚌</div><span class="github-badge">⌥ GitHub →</span></div>
+        <div class="project-title">Precision Stop Bus Tech</div>
+        <div class="project-desc">Intelligent bus stop system using IoT sensors and scheduling logic to improve public transport timing and operational efficiency.</div>
+        <div class="project-tags"><span class="tag">IoT</span><span class="tag">Sensors</span><span class="tag">Python</span></div>
+      </a>
+
+      <a href="#" target="_blank" class="project-card reveal">
+        <div class="project-card-top"><div class="project-icon">📄</div><span class="github-badge">⌥ GitHub →</span></div>
+        <div class="project-title">Resume Screening with ML</div>
+        <div class="project-desc">AI-based solution that automatically analyzes and filters resumes based on job requirements using machine learning classification algorithms.</div>
+        <div class="project-tags"><span class="tag">Scikit-learn</span><span class="tag">NLP</span><span class="tag">Python</span></div>
+      </a>
+
+      <a href="#" target="_blank" class="project-card reveal">
+        <div class="project-card-top"><div class="project-icon">📱</div><span class="github-badge">⌥ GitHub →</span></div>
+        <div class="project-title">Smartphone Usage Predictions</div>
+        <div class="project-desc">Data analytics project studying smartphone usage behavior and predicting future trends using statistical analysis and machine learning.</div>
+        <div class="project-tags"><span class="tag">Pandas</span><span class="tag">ML</span><span class="tag">Data Analytics</span></div>
+      </a>
+
+      <a href="https://github.com/Anameka/Health-Link" target="_blank" class="project-card reveal">
+        <div class="project-card-top"><div class="project-icon">🏥</div><span class="github-badge">⌥ GitHub →</span></div>
+        <div class="project-title">Health Link HMS</div>
+        <div class="project-desc">Centralized digital hospital management system enhancing patient records, scheduling, billing, and healthcare operations.</div>
+        <div class="project-tags"><span class="tag">Python</span><span class="tag">MongoDB</span><span class="tag">IBM</span></div>
+      </a>
+
+      <a href="#" target="_blank" class="project-card reveal">
+        <div class="project-card-top"><div class="project-icon">🚗</div><span class="github-badge">⌥ GitHub →</span></div>
+        <div class="project-title">Behind the Wheel: Traffic Safety</div>
+        <div class="project-desc">Data-driven analytical system examining traffic accident data to identify risk factors and generate road safety insights.</div>
+        <div class="project-tags"><span class="tag">Data Analysis</span><span class="tag">IBM Cognos</span><span class="tag">Visualization</span></div>
+      </a>
+
+      <a href="#" target="_blank" class="project-card reveal">
+        <div class="project-card-top"><div class="project-icon">💱</div><span class="github-badge">⌥ GitHub →</span></div>
+        <div class="project-title">World Currencies – INR Converter</div>
+        <div class="project-desc">Real-time currency conversion application fetching live exchange rates and converting global currencies into Indian Rupees.</div>
+        <div class="project-tags"><span class="tag">Python</span><span class="tag">REST API</span><span class="tag">IBM</span></div>
+      </a>
+
+      <a href="#" target="_blank" class="project-card reveal">
+        <div class="project-card-top"><div class="project-icon">🏧</div><span class="github-badge">⌥ GitHub →</span></div>
+        <div class="project-title">Basic ATM System in C</div>
+        <div class="project-desc">Console ATM simulation enabling secure banking operations — balance inquiries, withdrawals, and deposits using C programming.</div>
+        <div class="project-tags"><span class="tag">C Language</span><span class="tag">Data Structures</span></div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Research</div>
+      <h2 class="section-title">Published Work</h2>
+      <p class="section-sub">Academic contributions presented at national and international conferences.</p>
+    </div>
+    <div class="research-list">
+      <div class="research-item reveal"><div class="research-num">01</div><div><div class="research-title">Analysis on Existing Chatbot and its Challenges</div><div class="research-venue">International Conference — SRM Ramapuram</div><div class="research-desc">Systematic evaluation of current chatbot systems, highlighting limitations, conversational gaps, and pathways for next-generation improvements.</div></div></div>
+      <div class="research-item reveal"><div class="research-num">02</div><div><div class="research-title">Enhancing Game AI Decision-Making with Bayes' Theorem and Regression Models</div><div class="research-venue">Sri Malolan College of Arts and Science, Maduranthakam</div><div class="research-desc">Applied probabilistic and statistical models to improve AI decision-making in gaming using Bayes' Theorem for adaptive strategies and regression for player behavior prediction.</div></div></div>
+      <div class="research-item reveal"><div class="research-num">03</div><div><div class="research-title">Unveiling the Dark Web: An Analytical Perspective on its Role in Cybercrime</div><div class="research-venue">National Conference — Government Arts College, Nandanam</div><div class="research-desc">In-depth analytical study exploring how the dark web facilitates cybercrime operations and potential mitigation strategies.</div></div></div>
+      <div class="research-item reveal"><div class="research-num">04</div><div><div class="research-title">AI-Forensic Auditing: Transforming Financial Fraud Detection</div><div class="research-venue">National Conference — Jeppiaar College of Arts and Science, Padur</div><div class="research-desc">Leveraging AI techniques to revolutionize financial fraud detection, combining forensic auditing with machine learning for real-time anomaly identification.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="container">
+    <div class="reveal"><div class="section-label">Achievements</div><h2 class="section-title">Milestones</h2></div>
+    <div class="achieve-grid">
+      <div class="achieve-card reveal"><div class="achieve-icon">🏆</div><div><div class="achieve-title">Hackathon Top 10</div><div class="achieve-desc">Contributed to a team that secured a top 10 finish at an intercollegiate hackathon competition.</div></div></div>
+      <div class="achieve-card reveal"><div class="achieve-icon">🌍</div><div><div class="achieve-title">International Conference Speaker</div><div class="achieve-desc">Presented AI-based research at international academic forums at SRM Ramapuram.</div></div></div>
+      <div class="achieve-card reveal"><div class="achieve-icon">📣</div><div><div class="achieve-title">National Conference Contributor</div><div class="achieve-desc">Contributed to national academic discussions on AI, cybersecurity, and tech advancements.</div></div></div>
+      <div class="achieve-card reveal"><div class="achieve-icon">🎤</div><div><div class="achieve-title">Debates &amp; Public Speaking</div><div class="achieve-desc">Active participant in national and intercollegiate debate competitions with strong stage presence.</div></div></div>
+      <div class="achieve-card reveal"><div class="achieve-icon">🎓</div><div><div class="achieve-title">IIT Bombay Campus Ambassador</div><div class="achieve-desc">Selected as Campus Ambassador bridging industry and academic communities.</div></div></div>
+      <div class="achieve-card reveal"><div class="achieve-icon">👑</div><div><div class="achieve-title">Department President</div><div class="achieve-desc">Elected President of the AI &amp; Data Science department, leading student tech initiatives.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">Certifications</div>
+      <h2 class="section-title">17+ Credentials</h2>
+      <!--
+      ╔══════════════════════════════════════════════════╗
+      ║  CERTIFICATION LINKS — HOW TO ADD THEM           ║
+      ║  Each certificate card opens your certificate.   ║
+      ║                                                  ║
+      ║  OPTION A — Certificate on a website             ║
+      ║  (IBM SkillsBuild, NPTEL, Coursera, etc.)         ║
+      ║  Go to the certificate page → copy URL →         ║
+      ║  paste it as the href in that card below.        ║
+      ║                                                  ║
+      ║  OPTION B — Certificate as a photo/PDF           ║
+      ║  Upload to Google Drive →                        ║
+      ║  Right-click → Share → Anyone with link →        ║
+      ║  Copy link → paste as href below.               ║
+      ║                                                  ║
+      ║  Replace href="#" with your actual link.         ║
+      ╚══════════════════════════════════════════════════╝
+      -->
+      <p class="section-sub">Click any certificate to view the original credential.</p>
+    </div>
+    <div class="cert-grid-cards">
+
+      <a href="#" target="_blank" class="cert-card reveal"><!-- REPLACE # with your NPTEL Python cert link -->
+        <div class="cert-card-icon">📘</div>
+        <div class="cert-card-body"><div class="cert-card-org">NPTEL</div><div class="cert-card-name">Python for Data Science</div></div>
+        <span class="cert-card-arrow">→</span>
+      </a>
+
+      <a href="#" target="_blank" class="cert-card reveal">
+        <div class="cert-card-icon">📘</div>
+        <div class="cert-card-body"><div class="cert-card-org">NPTEL</div><div class="cert-card-name">Joy of Computing using Python</div></div>
+        <span class="cert-card-arrow">→</span>
+      </a>
+
+      <a href="#" target="_blank" class="cert-card reveal">
+        <div class="cert-card-icon">📘</div>
+        <div class="cert-card-body"><div class="cert-card-org">NPTEL</div><div class="cert-card-name">Introduction to Cloud Computing</div></div>
+        <span class="cert-card-arrow">→</span>
+      </a>
+
+      <a href="#" target="_blank" class="cert-card reveal">
+        <div class="cert-card-icon">📘</div>
+        <div class="cert-card-body"><div class="cert-card-org">NPTEL</div><div class="cert-card-name">Internet of Things</div></div>
+        <span class="cert-card-arrow">→</span>
+      </a>
+
+      <a href="#" target="_blank" class="cert-card reveal">
+        <div class="cert-card-icon">🔵</div>
+        <div class="cert-card-body"><div class="cert-card-org">IBM</div><div class="cert-card-name">Software Foundation with C Programming</div></div>
+        <span class="cert-card-arrow">→</span>
+      </a>
+
+      <a href="#" target="_blank" class="cert-card reveal">
+        <div class="cert-card-icon">🔵</div>
+        <div class="cert-card-body"><div class="cert-card-org">IBM</div><div class="cert-card-name">Business Intelligence</div></div>
+        <span class="cert-card-arrow">→</span>
+      </a>
+
+      <a href="#" target="_blank" class="cert-card reveal">
+        <div class="cert-card-icon">🔵</div>
+        <div class="cert-card-body"><div class="cert-card-org">IBM</div><div class="cert-card-name">Data Visualization</div></div>
+        <span class="cert-card-arrow">→</span>
+      </a>
+
+      <a href="#" target="_blank" class="cert-card reveal">
+        <div class="cert-card-icon">🔵</div>
+        <div class="cert-card-body"><div class="cert-card-org">IBM</div><div class="cert-card-name">Machine Learning using Watson Studio</div></div>
+        <span class="cert-card-arrow">→</span>
+      </a>
+
+      <a href="#" target="_blank" class="cert-card reveal">
+        <div class="cert-card-icon">🔵</div>
+        <div class="cert-card-body"><div class="cert-card-org">IBM</div><div class="cert-card-name">Machine Learning with Python</div></div>
+        <span class="cert-card-arrow">→</span>
+      </a>
+
+      <a href="#" target="_blank" class="cert-card reveal">
+        <div class="cert-card-icon">🔵</div>
+        <div class="cert-card-body"><div class="cert-card-org">IBM Skills Build</div><div class="cert-card-name">Web Development</div></div>
+        <span class="cert-card-arrow">→</span>
+      </a>
+
+      <a href="#" target="_blank" class="cert-card reveal">
+        <div class="cert-card-icon">🔵</div>
+        <div class="cert-card-body"><div class="cert-card-org">IBM Skills Build</div><div class="cert-card-name">Build Your First Chatbot</div></div>
+        <span class="cert-card-arrow">→</span>
+      </a>
+
+      <a href="#" target="_blank" class="cert-card reveal">
+        <div class="cert-card-icon">🟠</div>
+        <div class="cert-card-body"><div class="cert-card-org">Infosys Springboard</div><div class="cert-card-name">OOP in Python</div></div>
+        <span class="cert-card-arrow">→</span>
+      </a>
+
+      <a href="#" target="_blank" class="cert-card reveal">
+        <div class="cert-card-icon">🟠</div>
+        <div class="cert-card-body"><div class="cert-card-org">Infosys Springboard</div><div class="cert-card-name">Basics of Python</div></div>
+        <span class="cert-card-arrow">→</span>
+      </a>
+
+      <a href="#" target="_blank" class="cert-card reveal">
+        <div class="cert-card-icon">🟢</div>
+        <div class="cert-card-body"><div class="cert-card-org">Naan Mudhalvan</div><div class="cert-card-name">Collaboration and Networking</div></div>
+        <span class="cert-card-arrow">→</span>
+      </a>
+
+      <a href="#" target="_blank" class="cert-card reveal">
+        <div class="cert-card-icon">🟢</div>
+        <div class="cert-card-body"><div class="cert-card-org">Naan Mudhalvan / TNSDC</div><div class="cert-card-name">Frontend Web Dev &amp; Cloud</div></div>
+        <span class="cert-card-arrow">→</span>
+      </a>
+
+      <a href="#" target="_blank" class="cert-card reveal">
+        <div class="cert-card-icon">🤖</div>
+        <div class="cert-card-body"><div class="cert-card-org">UI Path</div><div class="cert-card-name">Introduction to Automation</div></div>
+        <span class="cert-card-arrow">→</span>
+      </a>
+
+      <a href="#" target="_blank" class="cert-card reveal">
+        <div class="cert-card-icon">🤖</div>
+        <div class="cert-card-body"><div class="cert-card-org">UI Path</div><div class="cert-card-name">Build Automations with Solution Accelerators</div></div>
+        <span class="cert-card-arrow">→</span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div style="text-align:center;" class="reveal">
+      <div class="section-label" style="justify-content:center;">Contact</div>
+      <h2 class="section-title">Let's connect</h2>
+      <p class="section-sub" style="margin:0 auto;">Open to internships, research collaborations, and AI projects.</p>
+    </div>
+    <div class="contact-inner reveal">
+      <p style="color:var(--text2);font-size:.95rem;line-height:1.7;">Whether you have an opportunity, a project idea, or just want to talk AI — my inbox is always open.</p>
+      <div class="contact-links">
+        <a href="mailto:anamekaanameka25@gmail.com" class="contact-link">✉ Gmail</a>
+        <!--
+        LinkedIn link — your profile URL is already set correctly below.
+        If your LinkedIn URL changes, update the href.
+        -->
+        <a href="https://www.linkedin.com/in/anameka-644243811" target="_blank" class="contact-link">in LinkedIn</a>
+        <a href="tel:+919047017678" class="contact-link">☎ +91 90470 17678</a>
+      </div>
+      <div class="contact-form">
+        <div class="form-row">
+          <div class="form-group"><label>Name</label><input type="text" id="c-name" placeholder="Your name" /></div>
+          <div class="form-group"><label>Email</label><input type="email" id="c-email" placeholder="your@email.com" /></div>
+        </div>
+        <div class="form-group"><label>Subject</label><input type="text" id="c-subject" placeholder="What's this about?" /></div>
+        <div class="form-group"><label>Message</label><textarea id="c-message" placeholder="Your message..."></textarea></div>
+        <button class="btn btn-primary" style="align-self:flex-end;" onclick="handleContactForm()">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>Designed &amp; built by B. Anameka &nbsp;·&nbsp; 2025 &nbsp;·&nbsp;
+      <span style="color:var(--accent);">B.Sc. CS with AI — Jeppiaar College of Arts &amp; Science</span>
+    </p>
+  </div>
+</footer>
+
+<script>
+// ════════════════════════════════════════
+// 1. DARK / LIGHT MODE TOGGLE
+//    Clicking the ☀ / 🌙 button in the
+//    top-right corner switches the theme.
+// ════════════════════════════════════════
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.querySelector('.theme-btn').textContent = isDark ? '🌙' : '☀';
+}
+
+// ════════════════════════════════════════
+// 2. TYPING ANIMATION
+//    These phrases appear one-by-one under
+//    your name. They type out, pause, then
+//    delete and move to the next phrase.
+//
+//    ✏ TO CHANGE PHRASES:
+//    Edit the list below. Add your own,
+//    remove any you don't want.
+// ════════════════════════════════════════
+const phrases = [
+  'B.Sc. CS with AI Student',
+  'Machine Learning Enthusiast',
+  'Data Analyst',
+  'Chatbot Developer',
+  'Research Author'
+];
+let phraseIndex = 0, charIndex = 0, deleting = false;
+const typingEl = document.getElementById('typing-text');
+function type() {
+  const phrase = phrases[phraseIndex];
+  if (!deleting) {
+    typingEl.textContent = phrase.slice(0, charIndex + 1);
+    charIndex++;
+    if (charIndex === phrase.length) {
+      deleting = true;
+      setTimeout(type, 1800); // wait 1.8s before deleting
+      return;
+    }
+  } else {
+    typingEl.textContent = phrase.slice(0, charIndex - 1);
+    charIndex--;
+    if (charIndex === 0) {
+      deleting = false;
+      phraseIndex = (phraseIndex + 1) % phrases.length;
+    }
+  }
+  setTimeout(type, deleting ? 50 : 80);
+}
+type(); // start the animation
+
+// ════════════════════════════════════════
+// 3. SCROLL REVEAL ANIMATION
+//    Elements fade in from below as you
+//    scroll down the page.
+//    You don't need to change anything here.
+// ════════════════════════════════════════
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      entry.target.style.transitionDelay = (i * 0.04) + 's';
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.10 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ════════════════════════════════════════
+// 4. SMOOTH SCROLL FOR NAVBAR LINKS
+//    When you click "Projects" in the nav,
+//    the page smoothly scrolls to that section.
+// ════════════════════════════════════════
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+
+// ════════════════════════════════════════
+// 5. CONTACT FORM VALIDATION
+//    Makes sure the visitor fills in all
+//    fields before sending.
+//    Currently shows a popup message.
+//    To actually send emails, you'll need
+//    to connect a service like Formspree.io
+//    (free plan available).
+// ════════════════════════════════════════
+function handleContactForm() {
+  const name    = document.getElementById('c-name').value.trim();
+  const email   = document.getElementById('c-email').value.trim();
+  const subject = document.getElementById('c-subject').value.trim();
+  const message = document.getElementById('c-message').value.trim();
+  if (!name || !email || !message) {
+    alert('⚠ Please fill in your name, email, and message before sending!');
+    return;
+  }
+  alert('✅ Thank you ' + name + '! Your message has been noted. I will get back to you at ' + email + ' soon!');
+  document.getElementById('c-name').value = '';
+  document.getElementById('c-email').value = '';
+  document.getElementById('c-subject').value = '';
+  document.getElementById('c-message').value = '';
+}
+</script>
+</body>
+</html>
